@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#2563eb">
+    <meta name="description" content="Weather Focus — simple, local and reliable weather information.">
+
+    <title>Weather Focus — Simple. Local. Reliable.</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                linear-gradient(180deg, #eff6ff 0%, #f8fafc 45%, #ffffff 100%);
+
+            color: #0f172a;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: min(1100px, calc(100% - 32px));
+            margin: auto;
+        }
+
+        /* HEADER */
+
+        header {
+            padding: 20px 0;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 15px;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 27px;
+
+            background:
+                linear-gradient(135deg, #2563eb, #60a5fa);
+
+            box-shadow:
+                0 10px 25px rgba(37, 99, 235, .25);
+        }
+
+        .brand-name {
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .brand-subtitle {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 55px 0 70px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 8px 14px;
+            border-radius: 999px;
+
+            background: #dbeafe;
+            color: #1d4ed8;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 8vw, 76px);
+            line-height: .98;
+            letter-spacing: -3px;
+
+            max-width: 850px;
+            margin: auto;
+
+            background:
+                linear-gradient(135deg, #0f172a, #2563eb);
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 25px auto 0;
+
+            color: #64748b;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        /* DOWNLOAD */
+
+        .download-area {
+            margin-top: 32px;
+
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            min-height: 56px;
+            padding: 0 25px;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(135deg, #2563eb, #1d4ed8);
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 16px;
+            font-weight: 800;
+
+            box-shadow:
+                0 14px 30px rgba(37, 99, 235, .28);
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 18px 35px rgba(37, 99, 235, .35);
+        }
+
+        .secondary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 56px;
+            padding: 0 22px;
+
+            border-radius: 17px;
+
+            background: white;
+            border: 1px solid #dbe3ef;
+
+            color: #334155;
+            text-decoration: none;
+
+            font-weight: 700;
+        }
+
+        .version {
+            margin-top: 14px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        /* APP PREVIEW */
+
+        .phone-wrap {
+            display: flex;
+            justify-content: center;
+            margin: 15px auto 80px;
+        }
+
+        .phone {
+            width: min(320px, 85vw);
+            padding: 10px;
+
+            border-radius: 38px;
+
+            background: #0f172a;
+
+            box-shadow:
+                0 30px 70px rgba(15, 23, 42, .28);
+        }
+
+        .phone-screen {
+            min-height: 560px;
+            border-radius: 29px;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #2563eb,
+                    #60a5fa 48%,
+                    #f8fafc 49%
+                );
+        }
+
+        .phone-top {
+            padding: 28px 20px 18px;
+            color: white;
+        }
+
+        .phone-location {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .phone-condition {
+            margin-top: 8px;
+            font-size: 15px;
+            opacity: .9;
+        }
+
+        .temperature {
+            margin-top: 35px;
+            font-size: 70px;
+            line-height: 1;
+            font-weight: 300;
+        }
+
+        .phone-info {
+            padding: 20px;
+
+            margin-top: 30px;
+
+            border-radius: 28px 28px 0 0;
+
+            background: #f8fafc;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 9px;
+        }
+
+        .info-card {
+            padding: 15px 7px;
+            text-align: center;
+
+            border-radius: 16px;
+            background: white;
+        }
+
+        .info-card strong {
+            display: block;
+            margin-top: 6px;
+            font-size: 13px;
+        }
+
+        .info-card span {
+            color: #64748b;
+            font-size: 11px;
+        }
+
+        /* FEATURES */
+
+        .section {
+            padding: 65px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(28px, 5vw, 42px);
+            letter-spacing: -1px;
+        }
+
+        .section-heading p {
+            margin-top: 10px;
+            color: #64748b;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .feature {
+            padding: 25px;
+
+            background: rgba(255,255,255,.8);
+            border: 1px solid #e2e8f0;
+
+            border-radius: 23px;
+
+            box-shadow:
+                0 12px 30px rgba(15, 23, 42, .05);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 15px;
+
+            background: #dbeafe;
+
+            font-size: 23px;
+
+            margin-bottom: 17px;
+        }
+
+        .feature h3 {
+            font-size: 17px;
+        }
+
+        .feature p {
+            margin-top: 8px;
+
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* INSTALL */
+
+        .install {
+            margin-top: 35px;
+
+            padding: 32px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(135deg, #0f172a, #1e3a8a);
+
+            color: white;
+        }
+
+        .install h2 {
+            font-size: 25px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+        .step {
+            padding: 20px;
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,.09);
+        }
+
+        .step-number {
+            font-size: 13px;
+            font-weight: 800;
+            color: #93c5fd;
+        }
+
+        .step p {
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.55;
+            color: #dbeafe;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 60px;
+            padding: 30px 0;
+
+            border-top: 1px solid #e2e8f0;
+
+            text-align: center;
+
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        footer strong {
+            color: #334155;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 760px) {
+
+            .hero {
+                padding-top: 35px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .download-area {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .download-btn,
+            .secondary-btn {
+                width: 100%;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 45px 0;
+            }
+        }
+
+        /* DARK MODE */
+
+        @media (prefers-color-scheme: dark) {
+
+            body {
+                background:
+                    linear-gradient(
+                        180deg,
+                        #020617,
+                        #0f172a 55%,
+                        #020617
+                    );
+
+                color: #f8fafc;
+            }
+
+            .brand-subtitle,
+            .hero p,
+            .section-heading p,
+            .feature p,
+            footer {
+                color: #94a3b8;
+            }
+
+            .hero h1 {
+                background:
+                    linear-gradient(135deg, #f8fafc, #60a5fa);
+
+                -webkit-background-clip: text;
+                background-clip: text;
+            }
+
+            .hero-badge {
+                background: #172554;
+                color: #93c5fd;
+            }
+
+            .secondary-btn {
+                background: #1e293b;
+                border-color: #334155;
+                color: #f8fafc;
+            }
+
+            .feature {
+                background: rgba(15,23,42,.75);
+                border-color: #1e293b;
+            }
+
+            .feature-icon {
+                background: #172554;
+            }
+
+            footer {
+                border-color: #1e293b;
+            }
+
+            footer strong {
+                color: #e2e8f0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container nav">
+
+        <a href="#" class="brand">
+            <div class="brand-icon">☁️</div>
+
+            <div>
+                <div class="brand-name">Weather Focus</div>
+                <div class="brand-subtitle">
+                    Simple. Local. Reliable.
+                </div>
+            </div>
+        </a>
+
+    </div>
+</header>
+
+
+<main>
+
+    <!-- HERO -->
+
+    <section class="hero">
+        <div class="container">
+
+            <div class="hero-badge">
+                🌦️ Weather Focus 1.0
+            </div>
+
+            <h1>
+                Know your weather.
+                Stay prepared.
+            </h1>
+
+            <p>
+                A clean, fast and easy-to-use weather app designed
+                to give you the information you need without the clutter.
+            </p>
+
+            <div class="download-area">
+
+                <a
+                    class="download-btn"
+                    href="downloads/WeatherFocus-1.0.apk"
+                    download
+                >
+                    ⬇️ Download Weather Focus
+                </a>
+
+                <a
+                    class="secondary-btn"
+                    href="#features"
+                >
+                    Explore Features
+                </a>
+
+            </div>
+
+            <div class="version">
+                Android • Version 1.0 • Signed Release APK
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- PHONE PREVIEW -->
+
+    <section class="phone-wrap">
+
+        <div class="phone">
+
+            <div class="phone-screen">
+
+                <div class="phone-top">
+
+                    <div class="phone-location">
+                        📍 Your Location
+                    </div>
+
+                    <div class="phone-condition">
+                        ☀️ Clear sky
+                    </div>
+
+                    <div class="temperature">
+                        24°
+                    </div>
+
+                    <div>
+                        Feels like 24°
+                    </div>
+
+                </div>
+
+                <div class="phone-info">
+
+                    <div class="info-grid">
+
+                        <div class="info-card">
+                            💧
+                            <strong>65%</strong>
+                            <span>Humidity</span>
+                        </div>
+
+                        <div class="info-card">
+                            💨
+                            <strong>12 km/h</strong>
+                            <span>Wind</span>
+                        </div>
+
+                        <div class="info-card">
+                            🌧️
+                            <strong>0 mm</strong>
+                            <span>Rain</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
+    <section class="section" id="features">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <h2>Everything you need.</h2>
+
+                <p>
+                    Weather information presented clearly.
+                </p>
+
+            </div>
+
+            <div class="features">
+
+                <div class="feature">
+
+                    <div class="feature-icon">🌦️</div>
+
+                    <h3>Current Weather</h3>
+
+                    <p>
+                        Quickly see temperature, conditions,
+                        humidity, wind and rainfall.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">📅</div>
+
+                    <h3>7-Day Forecast</h3>
+
+                    <p>
+                        Plan ahead with daily temperature
+                        and precipitation information.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">⏰</div>
+
+                    <h3>Hourly Forecast</h3>
+
+                    <p>
+                        See how conditions are expected
+                        to change throughout the day.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">📍</div>
+
+                    <h3>Local Weather</h3>
+
+                    <p>
+                        Search towns and cities or use
+                        your current location.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">⭐</div>
+
+                    <h3>Favorites</h3>
+
+                    <p>
+                        Save locations you check regularly
+                        for quick access.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">🌙</div>
+
+                    <h3>Dark Mode</h3>
+
+                    <p>
+                        A comfortable dark interface for
+                        low-light use.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- INSTALL -->
+
+            <div class="install">
+
+                <h2>Install Weather Focus</h2>
+
+                <div class="steps">
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            STEP 01
+                        </div>
+
+                        <p>
+                            Tap the Download Weather Focus
+                            button above.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            STEP 02
+                        </div>
+
+                        <p>
+                            Open the downloaded APK
+                            on your Android device.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            STEP 03
+                        </div>
+
+                        <p>
+                            Follow Android's installation
+                            instructions to install the app.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="container">
+
+        <strong>Weather Focus</strong>
+
+        <br>
+
+        Simple. Local. Reliable.
+
+        <br><br>
+
+        Version 1.0 • Android
+
+    </div>
+
+</footer>
+
+
+<script>
+
+    /*
+     * Prevent accidental download when APK is missing.
+     */
+
+    const downloadButton =
+        document.querySelector(".download-btn");
+
+    downloadButton.addEventListener("click", function () {
+
+        console.log(
+            "Weather Focus 1.0 download started."
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
